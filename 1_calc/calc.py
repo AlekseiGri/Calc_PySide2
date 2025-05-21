@@ -12,6 +12,8 @@ from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
+from PySide2.QtWidgets import QMessageBox # для всплывающего окна
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -129,6 +131,10 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         QMetaObject.connectSlotsByName(MainWindow)
+
+        self.add_function() # запуск функции обработки
+
+        self.is_equal = False # флаг резета
     # setupUi
 
     def retranslateUi(self, MainWindow):
@@ -149,5 +155,68 @@ class Ui_MainWindow(object):
         self.btn_minus.setText(QCoreApplication.translate("MainWindow", u"-", None))
         self.btn_raise.setText(QCoreApplication.translate("MainWindow", u"*", None))
         self.btn_fission.setText(QCoreApplication.translate("MainWindow", u"/", None))
+
+ # тут начинается логика программы
+
+    def add_function(self):
+        self.btn_zero.clicked.connect(lambda: self.write_number(self.btn_zero.text()))
+        self.btn_1.clicked.connect(lambda: self.write_number(self.btn_1.text()))
+        self.btn_2.clicked.connect(lambda: self.write_number(self.btn_2.text()))
+        self.btn_3.clicked.connect(lambda: self.write_number(self.btn_3.text()))
+        self.btn_4.clicked.connect(lambda: self.write_number(self.btn_4.text()))
+        self.btn_5.clicked.connect(lambda: self.write_number(self.btn_5.text()))
+        self.btn_6.clicked.connect(lambda: self.write_number(self.btn_6.text()))
+        self.btn_7.clicked.connect(lambda: self.write_number(self.btn_7.text()))
+        self.btn_8.clicked.connect(lambda: self.write_number(self.btn_8.text()))
+        self.btn_plus.clicked.connect(lambda: self.write_number(self.btn_plus.text()))
+        self.btn_minus.clicked.connect(lambda: self.write_number(self.btn_minus.text()))
+        self.btn_raise.clicked.connect(lambda: self.write_number(self.btn_raise.text()))
+        self.btn_fission.clicked.connect(lambda: self.write_number(self.btn_fission.text()))
+
+        self.btn_equal.clicked.connect(self.results)
+
+    def write_number(self, number):
+      if self.label_result.text() == "0" or self.is_equal:
+           self.label_result.setText(number)
+           self.is_equal = False
+      else:     
+        self.label_result.setText(self.label_result.text() + number)
+    def results(self):
+     if not self.is_equal:
+      res = eval(self.label_result.text())
+      self.label_result.setText("Result: " + str(res))
+      self.is_equal = True
+     else:
+        error = QMessageBox()
+        error.setWindowTitle("error")
+        error.setText("don push '=' again")
+        error.setIcon(QMessageBox.Warning)
+        error.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel | QMessageBox.Reset)
+        error.setDefaultButton(QMessageBox.Ok)
+        error.setInformativeText("I have no idea")
+        error.setDetailedText("More information")
+
+        error.buttonClicked.connect(self.popup_action)
+
+        error.exec_()
+ 
+    def popup_action (self, btn):
+     if btn.text() == "Ok":
+        print ("Ok")
+     elif btn.text() == "Reset":
+      self.label_result.setText("")
+      self.is_equal = False
+
     # retranslateUi
 
+# тут заканчивается логика
+
+# во время запуска скрипта pyside2-uic функция main не добовляется 
+if __name__ == "__main__":
+    import sys
+    app = QApplication(sys.argv)
+    MainWindow = QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
