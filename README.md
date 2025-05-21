@@ -40,7 +40,7 @@
 Шаг 3: Запуск
 Теперь можно открыть и запустить файл file.py. Готово!
 
-
+---
 
 # PySide2 Project (Eng)
 Example projects created using Qt Designer and PySide2 library. The UI design is created in Qt Designer and saved as a .ui file, which is then converted to a .py file for adding Python logic.
