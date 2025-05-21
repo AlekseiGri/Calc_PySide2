@@ -1,4 +1,4 @@
-# PySide2 Project
+# PySide2 Project (RUS)
 Примеры проектов, созданных с помощью Qt Designer и библиотеки PySide2. Дизайн создаётся в Qt Designer и сохраняется в .ui файл, который затем конвертируется в .py файл для добавления логики на Python.
 
 ## Подготовка и установка на Windows
@@ -40,7 +40,9 @@
 Шаг 3: Запуск
 Теперь можно открыть и запустить файл file.py. Готово!
 
-# PySide2 Project
+
+
+# PySide2 Project (Eng)
 Example projects created using Qt Designer and PySide2 library. The UI design is created in Qt Designer and saved as a .ui file, which is then converted to a .py file for adding Python logic.
 
 ## Setup and Installation (Windows)
